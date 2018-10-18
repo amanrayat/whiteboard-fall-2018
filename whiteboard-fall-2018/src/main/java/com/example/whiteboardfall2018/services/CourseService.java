@@ -2,7 +2,6 @@ package com.example.whiteboardfall2018.services;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,8 +18,23 @@ import com.example.whiteboardfall2018.models.Course;
 @CrossOrigin
 public class CourseService {
 
-	List<Course> cList = new ArrayList<>();
+	public static List<Course> cList = new ArrayList<>();
+	
+	private static CourseService instance = null;
+	
+	private CourseService(List<Course> cList) {
+		CourseService.cList = cList;
+	}
+	CourseService(){}
+	
+	public static CourseService getInstance() {
+		if(instance ==null) {
+			instance = new CourseService(cList);
+		}
+		return instance;
+	}
 
+	
 	@GetMapping("/api/course")
 	public List<Course> findAllCourses(){
 		return cList; 

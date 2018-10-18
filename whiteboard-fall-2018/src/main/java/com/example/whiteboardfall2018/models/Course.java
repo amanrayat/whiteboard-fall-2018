@@ -6,7 +6,6 @@ import java.util.List;
 public class Course {
 	
 	public Course(int id, String courseName, List<Module> module) {
-		super();
 		this.id = id;
 		this.courseName = courseName;
 		this.module = module;
