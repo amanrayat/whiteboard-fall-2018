@@ -26,6 +26,13 @@ public class Person {
 	}
 	
 	
+	@Override
+	public String toString() {
+		return "Person [id=" + id + ", userName=" + userName + ", password=" + password + ", firstName=" + firstName
+				+ ", lastName=" + lastName + ", phoneNo=" + phoneNo + ", email=" + email + ", role=" + role + ", dob="
+				+ dob + "]";
+	}
+
 	//Setters and Getters
 	public String getPassword() {
 		return password;
