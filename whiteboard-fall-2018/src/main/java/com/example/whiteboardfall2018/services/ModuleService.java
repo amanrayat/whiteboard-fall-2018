@@ -2,6 +2,7 @@ package com.example.whiteboardfall2018.services;
 import com.example.whiteboardfall2018.models.Course;
 import com.example.whiteboardfall2018.models.Module;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
@@ -55,7 +56,17 @@ public class ModuleService {
 	
 	@DeleteMapping("api/module/{moduleid}")
 	public void deleteModule(@PathVariable("moduleid") int id) {
-		
+		List<Course> courseList = instance.findAllCourses();
+		for(int i=0;i<courseList.size();i++) {
+			List <Module> newModules1 = courseList.get(i).getModule();
+			List <Module> newModules2 = new ArrayList<>();
+			for(int j=0;j<newModules1.size();j++) {
+				if(newModules1.get(j).getId() != id) {
+					newModules2.add(newModules1.get(j));
+				}
+			}
+			courseList.get(i).setModule(newModules2);
+		}
 	}
 	
 	//TODo : Put mapping 

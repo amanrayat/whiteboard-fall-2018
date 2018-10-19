@@ -11,6 +11,13 @@ public class Module {
 		this.moduleName = moduleName;
 	}
 	int id;
+	
+	public Module(int id, String moduleName, List<Lesson> lessons) {
+		super();
+		this.id = id;
+		this.moduleName = moduleName;
+		this.lessons = lessons;
+	}
 	public int getId() {
 		return id;
 	}
