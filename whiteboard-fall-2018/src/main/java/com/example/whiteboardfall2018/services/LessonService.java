@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class LessonService {
 	ModuleService instance = new ModuleService();
 
-	@PostMapping("api/module/{mid}/lesson")
+	@PostMapping("/api/module/{mid}/lesson")
 	public void createLesson(@PathVariable ("mid") int mid, @RequestBody Lesson lesson) {
 			Module module = instance.findModuleById(mid);
 			List<Lesson> newLessons = module.getLessons();
@@ -34,13 +34,13 @@ public class LessonService {
 			
 	}
 	
-	@GetMapping("api/module/{mid}/lesson")
+	@GetMapping("/api/module/{mid}/lesson")
 	public List<Lesson> findAllLessonsForModuleId(@PathVariable("mid") int mId){
 		return instance.findModuleById(mId).getLessons();
 	} 
 	
 	
-	@GetMapping("api/lesson/{lid}")
+	@GetMapping("/api/lesson/{lid}")
 	public Lesson getLessonById(@PathVariable ("lid") int lid) {
 		List<Module> moduleList = instance.findAllModules();
 		for(Module module : moduleList) {
@@ -56,7 +56,7 @@ public class LessonService {
 	
 	}
 	
-	@DeleteMapping("api/lesson/{lid")
+	@DeleteMapping("/api/lesson/{lid}")
 	public void deleteLesson(@PathVariable("lid") int lid) {
 		List<Module> moduleList = instance.findAllModules();
 		for(int i=0;i<moduleList.size();i++) {
@@ -71,7 +71,7 @@ public class LessonService {
 		}
 	}
 	
-	@GetMapping("api/lesson")
+	@GetMapping("/api/lesson")
 	public List<Lesson> getAllLessons(){
 		List <Lesson> lList = new ArrayList<>();
  		for(Module module : instance.findAllModules()) {

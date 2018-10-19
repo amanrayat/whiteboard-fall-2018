@@ -73,7 +73,9 @@ public class ModuleService {
 	public List<Module> findAllModules(){
 		List <Module> mList = new ArrayList<>();
  		for(Course course : instance.findAllCourses()) {
- 			mList.addAll(course.getModule());
+ 			if(course.getModule()!=null) {
+ 				mList.addAll(course.getModule());
+ 			}
 			
 		}
  		return mList;
