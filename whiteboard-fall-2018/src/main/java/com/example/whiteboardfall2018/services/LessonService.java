@@ -71,4 +71,14 @@ public class LessonService {
 		}
 	}
 	
+	@GetMapping("api/lesson")
+	public List<Lesson> getAllLessons(){
+		List <Lesson> lList = new ArrayList<>();
+ 		for(Module module : instance.findAllModules()) {
+ 			lList.addAll(module.getLessons());
+			
+		}
+ 		return lList;
+	}
+	
 }
