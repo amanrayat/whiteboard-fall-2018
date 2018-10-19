@@ -20,10 +20,10 @@ public class ModuleService {
 	
 	CourseService instance = new CourseService();
 	
-	@GetMapping("api/modules")
-	public List<Course> test() {
-		return instance.findAllCourses();
-	}
+//	@GetMapping("api/modules")
+//	public List<Course> test() {
+//		return instance.findAllCourses();
+//	}
 	
 	@PostMapping("api/course/{cid}/module")
 	public void createModule(@PathVariable ("cid") int cid, @RequestBody Module module) {
@@ -67,6 +67,16 @@ public class ModuleService {
 			}
 			courseList.get(i).setModule(newModules2);
 		}
+	}
+	
+	@GetMapping("api/module")
+	public List<Module> findAllModules(){
+		List <Module> mList = new ArrayList<>();
+ 		for(Course course : instance.findAllCourses()) {
+ 			mList.addAll(course.getModule());
+			
+		}
+ 		return mList;
 	}
 	
 	//TODo : Put mapping 
