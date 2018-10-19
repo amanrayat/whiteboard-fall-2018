@@ -2,6 +2,7 @@ package com.example.whiteboardfall2018.services;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.whiteboardfall2018.models.Lesson;
+import com.example.whiteboardfall2018.models.Module;
 import com.example.whiteboardfall2018.models.Topic;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ public class TopicService {
 	
 	LessonService instance = new LessonService();
 	
-	@PostMapping("api/lesson/{lid}/topic")
+	@PostMapping("/api/lesson/{lid}/topic")
 	public void createTopic(@PathVariable ("lid") int lid, @RequestBody Topic topic) {
 		Lesson lesson = instance.getLessonById(lid);
 		List<Topic> newTopics = lesson.getTopics();
@@ -29,27 +30,23 @@ public class TopicService {
 		lesson.setTopics(newTopics);
 	}
 	
-	@GetMapping("api/lesson/{lid}/topic")
+	@GetMapping("/api/lesson/{lid}/topic")
 	public List<Topic> getAllTopicsForLesson(@PathVariable("lid") int lid){
 		return instance.getLessonById(lid).getTopics();
 	}
 	
-	@GetMapping("api/topic/{tid}")
+	@GetMapping("/api/topic/{tId}")
 	public Topic getTopicById(@PathVariable("tId") int tId) {
-		List<Lesson> lessonList = instance.getAllLessons();
-		for(Lesson lesson : lessonList) {
-			Lesson newLesson = lesson;
-			for(Topic topic : newLesson.getTopics()) {
-				if(topic.getId() == tId) {
-					return topic;
-				}
+		for(Topic topic : this.getAllTopics()) {
+			System.out.println(topic.getId());
+			if(topic.getId() == tId) {
+				return topic;
 			}
-				
 		}
 		return null;
 	}
 	
-	@DeleteMapping("api/topic/{tId}")
+	@DeleteMapping("/api/topic/{tId}")
 	public void deleteTopic(@PathVariable("tId") int tId) {
 		List<Lesson> lessonList = instance.getAllLessons();
 		for(int i=0;i<lessonList.size();i++) {
@@ -64,7 +61,17 @@ public class TopicService {
 		}
 	}
 	
-	
+	@GetMapping("/api/topic")
+	public List<Topic> getAllTopics(){
+		List <Topic> tList = new ArrayList<>();
+ 		for(Lesson lesson : instance.getAllLessons()) {
+ 			if(lesson.getTopics()!=null) {
+ 	 			tList.addAll(lesson.getTopics());
+ 			}
+			
+		}
+ 		return tList;
+	}
 	
 	
 

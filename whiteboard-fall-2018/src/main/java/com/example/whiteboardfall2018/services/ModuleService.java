@@ -28,16 +28,23 @@ public class ModuleService {
 	@PostMapping("api/course/{cid}/module")
 	public void createModule(@PathVariable ("cid") int cid, @RequestBody Module module) {
 		Course course = instance.findCourseById(cid);
-		List<Module> newModuleList  = course.getModule();
-		newModuleList.add(module);
-		course.setModule(newModuleList);
+		List<Module> result = new ArrayList<>();
+		if(course.getModule()!=null) {
+			result.addAll(course.getModule());
+		}
+		result.add(module);
+		course.setModule(result);
 	}
 	
 	
 	@GetMapping("api/course/{cid}/module")
 	public List<Module> getAllModulesForCourse(@PathVariable("cid") int cid){
+		List <Module> result = new ArrayList<>();
 		Course course = instance.findCourseById(cid);
-		return course.getModule();
+		if(course.getModule()!=null) {
+			result.addAll(course.getModule());
+		}
+		return result;
 		
 	}
 	
