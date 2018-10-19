@@ -76,7 +76,7 @@ public class CourseService {
 
 		}
 		newCourse.setOwner(course.getOwner());
-		newCourse.setCourseName(course.getCourseName());
+		newCourse.setTitle(course.getTitle());
 		
 	}
 

@@ -1,12 +1,8 @@
 package com.example.whiteboardfall2018.services;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.example.whiteboardfall2018.models.Course;
 import com.example.whiteboardfall2018.models.Lesson;
-import com.example.whiteboardfall2018.models.Module;
 import com.example.whiteboardfall2018.models.Topic;
-
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.web.bind.annotation.CrossOrigin;

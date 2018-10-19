@@ -5,9 +5,9 @@ import java.util.List;
 
 public class Course {
 	
-	public Course(int id, String courseName, List<Module> module) {
+	public Course(int id, String title, List<Module> module) {
 		this.id = id;
-		this.courseName = courseName;
+		this.title = title;
 		this.module = module;
 	}
 	public Course() {}
@@ -18,11 +18,11 @@ public class Course {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getCourseName() {
-		return courseName;
+	public String getTitle() {
+		return title;
 	}
-	public void setCourseName(String courseName) {
-		this.courseName = courseName;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 	public List<Module> getModule() {
 		return module;
@@ -49,7 +49,7 @@ public class Course {
 		this.modified = modified;
 	}
 	int id ;
-	String courseName;
+	String title;
 	List<Module> module;
 	String owner;
 	Date created;

@@ -6,16 +6,16 @@ public class Module {
 	
 	public Module() {
 	}
-	public Module(int id, String moduleName) {
+	public Module(int id, String title) {
 		this.id = id;
-		this.moduleName = moduleName;
+		this.title = title;
 	}
 	int id;
 	
-	public Module(int id, String moduleName, List<Lesson> lessons) {
+	public Module(int id, String title, List<Lesson> lessons) {
 		super();
 		this.id = id;
-		this.moduleName = moduleName;
+		this.title = title;
 		this.lessons = lessons;
 	}
 	public int getId() {
@@ -24,11 +24,11 @@ public class Module {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getModuleName() {
-		return moduleName;
+	public String getTitle() {
+		return title;
 	}
-	public void setModuleName(String moduleName) {
-		this.moduleName = moduleName;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 	public List<Lesson> getLessons() {
 		return lessons;
@@ -36,6 +36,6 @@ public class Module {
 	public void setLessons(List<Lesson> lessons) {
 		this.lessons = lessons;
 	}
-	String moduleName;
+	String title;
 	List <Lesson> lessons;
 }
