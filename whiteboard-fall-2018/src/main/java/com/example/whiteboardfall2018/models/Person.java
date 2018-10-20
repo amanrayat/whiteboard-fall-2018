@@ -33,6 +33,12 @@ public class Person {
 				+ dob + "]";
 	}
 
+	public Person(String userName, String password) {
+		super();
+		this.userName = userName;
+		this.password = password;
+	}
+
 	//Setters and Getters
 	public String getPassword() {
 		return password;

@@ -88,6 +88,13 @@ public class ModuleService {
  		return mList;
 	}
 	
+	@PutMapping("/api/module/{mId}")
+	public void updateModule(@PathVariable ("mId") int mId, @RequestBody Module module) {
+		if(this.findModuleById(mId) ==null)return;
+		Module mod = this.findModuleById(mId);
+		mod.setTitle(module.getTitle()); 
+	}
+	
 	//TODo : Put mapping 
 
 	

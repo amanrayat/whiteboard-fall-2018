@@ -73,6 +73,12 @@ public class TopicService {
  		return tList;
 	}
 	
+	@PutMapping("/api/topic/{lId}")
+	public void updateLesson(@PathVariable ("lId") int lId, @RequestBody Topic topic) {
+		if(this.getTopicById(lId) ==null)return;
+		Topic top = this.getTopicById(lId);
+		top.setTitle(topic.getTitle()); 
+	}
 	
 
 }

@@ -81,4 +81,12 @@ public class LessonService {
  		return lList;
 	}
 	
+	
+	@PutMapping("/api/lesson/{lId}")
+	public void updateLesson(@PathVariable ("lId") int lId, @RequestBody Lesson lesson) {
+		if(this.getLessonById(lId) ==null)return;
+		Lesson les = this.getLessonById(lId);
+		les.setTitle(lesson.getTitle()); 
+	}
+	
 }

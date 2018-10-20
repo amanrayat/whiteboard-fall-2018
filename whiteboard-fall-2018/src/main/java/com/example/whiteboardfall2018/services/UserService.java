@@ -17,7 +17,8 @@ import com.example.whiteboardfall2018.models.Person;
 //Controller Class
 @RestController
 
-@CrossOrigin(origins= "http://localhost:3000")
+
+@CrossOrigin(origins = "http://localhost:3000" , allowCredentials = "true")
 public class UserService {
 	//insitializing the user list with no users in it.
 	List<Person> pList = new ArrayList<>();
@@ -26,7 +27,7 @@ public class UserService {
 	public Person register(@RequestBody Person person, HttpSession session) {
 		pList.add(person);
 		session.setAttribute("currentUser", person);
-		return person;
+		return (Person) session.getAttribute("currentUser");
 	}
 
 
