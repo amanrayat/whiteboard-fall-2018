@@ -3,6 +3,8 @@ package com.example.whiteboardfall2018.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,9 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.whiteboardfall2018.models.Course;
+import com.example.whiteboardfall2018.models.Person;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000" , allowCredentials = "true" , allowedHeaders = "*")
 public class CourseService {
 
 	public static List<Course> cList = new ArrayList<>();
@@ -36,8 +39,15 @@ public class CourseService {
 
 	
 	@GetMapping("/api/course")
-	public List<Course> findAllCourses(){
-		return cList; 
+	public List<Course> findAllCourses(HttpSession session){
+		List <Course> courses = new ArrayList<>();
+		Person curr = (Person) session.getAttribute("currentUser");
+		for(Course course : cList) {
+			if(course.getOwner().equals(curr.getUserName())) {
+				courses.add(course);
+			}
+		}
+		return courses; 
 	}
 
 	@GetMapping("api/course/{courseId}")
@@ -62,7 +72,9 @@ public class CourseService {
 	}
 
 	@PostMapping("api/course")
-	public void createCourse(@RequestBody Course course) {
+	public void createCourse(@RequestBody Course course , HttpSession session) {
+		Person user = (Person) session.getAttribute("currentUser");
+		course.setOwner(user.getUserName());
 		cList.add(course);
 	}
 

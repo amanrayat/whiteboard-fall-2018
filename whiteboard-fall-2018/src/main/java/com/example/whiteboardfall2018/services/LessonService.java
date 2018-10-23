@@ -10,6 +10,9 @@ import com.example.whiteboardfall2018.models.Module;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,13 +24,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000" , allowCredentials = "true" , allowedHeaders = "*")
 public class LessonService {
 	ModuleService instance = new ModuleService();
 
 	@PostMapping("/api/module/{mid}/lesson")
-	public void createLesson(@PathVariable ("mid") int mid, @RequestBody Lesson lesson) {
-			Module module = instance.findModuleById(mid);
+	public void createLesson(@PathVariable ("mid") int mid, @RequestBody Lesson lesson , HttpSession session) {
+			Module module = instance.findModuleById(mid , session);
 			List<Lesson> newLessons = module.getLessons();
 			newLessons.add(lesson);
 			module.setLessons(newLessons);
@@ -35,14 +38,14 @@ public class LessonService {
 	}
 	
 	@GetMapping("/api/module/{mid}/lesson")
-	public List<Lesson> findAllLessonsForModuleId(@PathVariable("mid") int mId){
-		return instance.findModuleById(mId).getLessons();
+	public List<Lesson> findAllLessonsForModuleId(@PathVariable("mid") int mId , HttpSession session){
+		return instance.findModuleById(mId , session ).getLessons();
 	} 
 	
 	
 	@GetMapping("/api/lesson/{lid}")
-	public Lesson getLessonById(@PathVariable ("lid") int lid) {
-		List<Module> moduleList = instance.findAllModules();
+	public Lesson getLessonById(@PathVariable ("lid") int lid , HttpSession session) {
+		List<Module> moduleList = instance.findAllModules(session);
 		for(Module module : moduleList) {
 			Module newModule = module;
 			for(Lesson lesson : newModule.getLessons()) {
@@ -57,8 +60,8 @@ public class LessonService {
 	}
 	
 	@DeleteMapping("/api/lesson/{lid}")
-	public void deleteLesson(@PathVariable("lid") int lid) {
-		List<Module> moduleList = instance.findAllModules();
+	public void deleteLesson(@PathVariable("lid") int lid , HttpSession session) {
+		List<Module> moduleList = instance.findAllModules(session);
 		for(int i=0;i<moduleList.size();i++) {
 			List <Lesson> newLessons1 = moduleList.get(i).getLessons();
 			List <Lesson> newLessons2 = new ArrayList<>();
@@ -72,9 +75,9 @@ public class LessonService {
 	}
 	
 	@GetMapping("/api/lesson")
-	public List<Lesson> getAllLessons(){
+	public List<Lesson> getAllLessons(HttpSession session){
 		List <Lesson> lList = new ArrayList<>();
- 		for(Module module : instance.findAllModules()) {
+ 		for(Module module : instance.findAllModules(session)) {
  			lList.addAll(module.getLessons());
 			
 		}
@@ -83,9 +86,9 @@ public class LessonService {
 	
 	
 	@PutMapping("/api/lesson/{lId}")
-	public void updateLesson(@PathVariable ("lId") int lId, @RequestBody Lesson lesson) {
-		if(this.getLessonById(lId) ==null)return;
-		Lesson les = this.getLessonById(lId);
+	public void updateLesson(@PathVariable ("lId") int lId, @RequestBody Lesson lesson , HttpSession session) {
+		if(this.getLessonById(lId , session ) ==null)return;
+		Lesson les = this.getLessonById(lId , session );
 		les.setTitle(lesson.getTitle()); 
 	}
 	

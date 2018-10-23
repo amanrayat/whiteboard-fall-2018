@@ -1,5 +1,6 @@
 package com.example.whiteboardfall2018.services;
 import com.example.whiteboardfall2018.models.Course;
+import javax.servlet.http.HttpSession;
 import com.example.whiteboardfall2018.models.Module;
 
 import java.util.ArrayList;
@@ -15,16 +16,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000" , allowCredentials = "true" , allowedHeaders = "*")
 public class ModuleService {
-	
+
 	CourseService instance = new CourseService();
-	
-//	@GetMapping("api/modules")
-//	public List<Course> test() {
-//		return instance.findAllCourses();
-//	}
-	
+
 	@PostMapping("api/course/{cid}/module")
 	public void createModule(@PathVariable ("cid") int cid, @RequestBody Module module) {
 		Course course = instance.findCourseById(cid);
@@ -35,8 +31,8 @@ public class ModuleService {
 		result.add(module);
 		course.setModule(result);
 	}
-	
-	
+
+
 	@GetMapping("api/course/{cid}/module")
 	public List<Module> getAllModulesForCourse(@PathVariable("cid") int cid){
 		List <Module> result = new ArrayList<>();
@@ -45,12 +41,12 @@ public class ModuleService {
 			result.addAll(course.getModule());
 		}
 		return result;
-		
+
 	}
-	
+
 	@GetMapping("api/module/{moduleId}")
-	public Module findModuleById(@PathVariable ("moduleId") int moduleId){
-		List<Course> courseList = instance.findAllCourses();
+	public Module findModuleById(@PathVariable ("moduleId") int moduleId , HttpSession session){
+		List<Course> courseList = instance.findAllCourses(session);
 		for(Course course : courseList) {
 			for(Module module : course.getModule()) {
 				if(module.getId() == moduleId) {
@@ -60,10 +56,10 @@ public class ModuleService {
 		}
 		return null;
 	}
-	
+
 	@DeleteMapping("api/module/{moduleid}")
-	public void deleteModule(@PathVariable("moduleid") int id) {
-		List<Course> courseList = instance.findAllCourses();
+	public void deleteModule(@PathVariable("moduleid") int id , HttpSession session) {
+		List<Course> courseList = instance.findAllCourses(session);
 		for(int i=0;i<courseList.size();i++) {
 			List <Module> newModules1 = courseList.get(i).getModule();
 			List <Module> newModules2 = new ArrayList<>();
@@ -75,27 +71,25 @@ public class ModuleService {
 			courseList.get(i).setModule(newModules2);
 		}
 	}
-	
+
 	@GetMapping("api/module")
-	public List<Module> findAllModules(){
+	public List<Module> findAllModules( HttpSession session ){
 		List <Module> mList = new ArrayList<>();
- 		for(Course course : instance.findAllCourses()) {
- 			if(course.getModule()!=null) {
- 				mList.addAll(course.getModule());
- 			}
-			
+		for(Course course : instance.findAllCourses(session)) {
+			if(course.getModule()!=null) {
+				mList.addAll(course.getModule());
+			}
+
 		}
- 		return mList;
+		return mList;
 	}
-	
+
 	@PutMapping("/api/module/{mId}")
-	public void updateModule(@PathVariable ("mId") int mId, @RequestBody Module module) {
-		if(this.findModuleById(mId) ==null)return;
-		Module mod = this.findModuleById(mId);
+	public void updateModule(@PathVariable ("mId") int mId, @RequestBody Module module , HttpSession session) {
+		if(this.findModuleById(mId , session ) ==null)return;
+		Module mod = this.findModuleById(mId , session );
 		mod.setTitle(module.getTitle()); 
 	}
-	
-	//TODo : Put mapping 
 
-	
+
 }
