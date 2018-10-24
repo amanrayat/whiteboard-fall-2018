@@ -19,7 +19,7 @@ import com.example.whiteboardfall2018.models.Person;
 
 //Controller Class 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000" , allowCredentials = "true" , allowedHeaders = "*")
+@CrossOrigin(origins = "*" , allowCredentials = "true" , allowedHeaders = "*")
 public class UserService {
 	//insitializing the user list with no users in it.
 	List<Person> pList = new ArrayList<>();
@@ -27,7 +27,6 @@ public class UserService {
 	@PostMapping("/api/register")
 	public Person register(@RequestBody Person person, HttpSession session) {
 		pList.add(person);
-		System.out.println(session.getId());
 		session.setAttribute("currentUser", person);
 		return person;
 	}
@@ -42,11 +41,9 @@ public class UserService {
 
 	@PostMapping("/api/login")
 	public Person login(@RequestBody Person user, HttpSession session) {
-		System.out.println(session.getId());
 		
 		for(Person person : pList) {
 			if(person.getUserName().equals(user.getUserName()) && person.getPassword().equals(user.getPassword())) {
-				System.out.println(session.getId() );
 				session.setAttribute("currentUser", person);
 				Person currentUser = (Person) session.getAttribute("currentUser");
 				return currentUser;
@@ -65,7 +62,6 @@ public class UserService {
 	@GetMapping("/api/user")
 	public List<Person> findAllPersons(@RequestParam (name = "username" , required = false) String username){
 		if(username ==null) {
-			System.out.println("I am hotting this");
 			return pList;
 		}
 		else {
@@ -99,7 +95,6 @@ public class UserService {
 				person.setLastName(user.getLastName());
 				person.setPhoneNo(user.getPhoneNo());
 				session.setAttribute("currentUser", person);
-				System.out.println(session.getId());
 			}
 		}
 		return null;

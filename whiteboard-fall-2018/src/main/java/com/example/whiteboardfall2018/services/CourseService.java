@@ -18,7 +18,7 @@ import com.example.whiteboardfall2018.models.Course;
 import com.example.whiteboardfall2018.models.Person;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000" , allowCredentials = "true" , allowedHeaders = "*")
+@CrossOrigin(origins = "*" , allowCredentials = "true" , allowedHeaders = "*")
 public class CourseService {
 
 	public static List<Course> cList = new ArrayList<>();
